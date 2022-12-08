@@ -6,14 +6,15 @@ use App\Entity\Produit;
 use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/produit')]
+#[Route('{_locale}/produit')]
 class ProduitController extends AbstractController
 {
-    #[Route('/', name: 'produit', methods: ['GET'])]
+    #[Route('/', name: 'produit_index', methods: ['GET'])]
     public function index(ProduitRepository $produitRepository): Response
     {
         return $this->render('produit/index.html.twig', [
@@ -22,16 +23,34 @@ class ProduitController extends AbstractController
     }
 
     #[Route('/add', name: 'produit_add', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProduitRepository $produitRepository): Response
+    public function add(Request $request, ProduitRepository $produitRepository): Response
     {
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $produitRepository->save($produit, true);
 
-            return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+            $imageFile = $form->get('photo')->getData();
+
+            if ($imageFile) {
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('upload_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('danger', 'Impossible d\'uploader l\'image');
+                    return $this->redirectToRoute('produit_index');
+                }
+                $produit->setPhoto($newFilename);
+            }
+
+            $produitRepository->save($produit, true);
+            $this->addFlash('success', 'Produit ajouté');
+            return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('produit/new.html.twig', [
@@ -41,7 +60,7 @@ class ProduitController extends AbstractController
     }
 
     #[Route('/view/{id}', name: 'produit_view', methods: ['GET'])]
-    public function show(Produit $produit): Response
+    public function view(Produit $produit): Response
     {
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
@@ -55,9 +74,32 @@ class ProduitController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $produitRepository->save($produit, true);
 
-            return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+            $imageFile = $form->get('photo')->getData();
+            $oldFile = $produit->getPhoto();
+
+            if($oldFile) {
+                unlink(__DIR__ . '/../../public/uploads/' . $oldFile);
+            }
+
+            if ($imageFile) {
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('upload_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('danger', 'Impossible d\'uploader l\'image');
+                    return $this->redirectToRoute('produit_index');
+                }
+                $produit->setPhoto($newFilename);
+            }
+
+            $produitRepository->save($produit, true);
+            $this->addFlash('success', 'Produit modifié');
+            return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('produit/edit.html.twig', [
@@ -71,8 +113,9 @@ class ProduitController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
             $produitRepository->remove($produit, true);
+            $this->addFlash('success', 'Produit supprimé');
         }
 
-        return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
     }
 }
