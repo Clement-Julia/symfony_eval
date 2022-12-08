@@ -1,0 +1,10 @@
+produit:
+  exist: Un produit avec ce nom existe déjà
+  name_too_short: Le nom du produit doit faire un minimum de 2 caractère
+  name_too_long: Le nom du produit doit faire un maximum de 255 caractère
+user:
+  email_not_correct: Vous devez utilisé un email
+  lastname_too_short: Votre nom doit faire au minimum 2 caractère
+  lastname_too_long: Votre nom doit faire an maximum 255 caractère
+  firstname_too_short: Votre prénom doit faire au minimum 2 caractère
+  firstname_too_long: Votre prénom doit faire au maximum 255 caractère
