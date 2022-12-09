@@ -18,9 +18,9 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-light">
+        <nav class="navbar navbar-expand-lg bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ path('produit_index') }}">Accueil</a>
+                <a class="navbar-brand blanc h-blanc" href="{{ path('produit_index') }}">Accueil</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +38,7 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         {% if is_granted('ROLE_USER') %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('user_view', {'id': app.user.id}) }}">{{ 'profil'|trans }}</a>
+                            <a class="nav-link blanc h-blanc" href="{{ path('user_view', {'id': app.user.id}) }}">{{ 'profil'|trans }}</a>
                         </li>
                         <li class="nav-item ms-2">
                             <a class="btn btn-outline-danger" href="{{ path('app_logout') }}">{{ 'logout'|trans }}</a>
@@ -48,7 +48,7 @@
                             <a class="btn btn-outline-success" href="{{ path('app_register') }}">{{ 'inscription'|trans }}</a>
                         </li>
                         <li class="nav-item ms-2">
-                            <a class="btn-outline-info" href="{{ path('app_login') }}">{{ 'connexion'|trans }}</a>
+                            <a class="btn btn-outline-info" href="{{ path('app_login') }}">{{ 'connexion'|trans }}</a>
                         </li>
                         {% endif %}
                     </ul>

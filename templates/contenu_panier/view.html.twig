@@ -5,7 +5,7 @@
 {% block body %}
     <h1>ContenuPanier</h1>
 
-    <table class="table">
+    <table class="table table-bordered table-hover blanc">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -22,9 +22,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_contenu_panier_index') }}">back to list</a>
+    <a href="{{ path('contenu_panier_index') }}">back to list</a>
 
-    <a href="{{ path('app_contenu_panier_edit', {'id': contenu_panier.id}) }}">edit</a>
+    <a href="{{ path('contenu_panier_edit', {'id': contenu_panier.id}) }}">edit</a>
 
     {{ include('contenu_panier/_delete_form.html.twig') }}
 {% endblock %}

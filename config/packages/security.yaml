@@ -31,9 +31,18 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        # Produit
+        - { path: ^en|fr/produit/add, roles: ROLE_ADMIN }
+        - { path: ^en|fr/produit/edit, roles: ROLE_ADMIN }
+        - { path: ^en|fr/produit/delete, roles: ROLE_ADMIN }
+        # User
+        - { path: ^en|fr/user/edit, roles: ROLE_ADMIN }
+        - { path: ^en|fr/user/view, roles: ROLE_ADMIN }
         - { path: ^en|fr/user/list, roles: ROLE_SUPERADMIN }
-        - { path: (^en|fr/user/view) | (^en|fr/user/edit), roles: ROLE_USER }
-        - { path: (^/en|fr/produit/add) | (^/en|fr/produit/edit) | (^/en|fr/produit/delete), roles: ROLE_ADMIN }
+        # Panier
+        - { path: ^en|fr/panier/view, roles: ROLE_USER }
+
+
     role_hierarchy:
         ROLE_ADMIN: [ROLE_USER]
         ROLE_SUPERADMIN: [ROLE_ADMIN]

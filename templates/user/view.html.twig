@@ -5,7 +5,7 @@
 {% block body %}
     <h1 class="display-5 text-center">Mon profil</h1>
 
-    <table class="table">
+    <table class="table table-bordered table-hover blanc">
         <tbody>
             <tr>
                 <th>Email</th>
@@ -47,7 +47,7 @@
                 <div id="flush-collapse{{p.id}}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{p.id}}" data-bs-parent="#accordion{{p.id}}">
                     <div class="accordion-body d-flex flex-column p-3">
                         <div class="text-center">Commande passé le : {{ p.date|date('d/m/Y h:i:s') }}</div>
-                        <a class="btn btn-outline-primary mt-2">Voir la commande</a>
+                        <a class="btn btn-outline-primary mt-2" href="{{ path('panier_view', {'id': p.id}) }}">Voir la commande</a>
                     </div>
                 </div>
             </div>

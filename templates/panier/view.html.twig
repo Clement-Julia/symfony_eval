@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier{% endblock %}
+
+{% block body %}
+    <a class="btn btn-outline-primary" href="{{ path('user_view', {'id': app.user.id}) }}">{{ 'retour'|trans }}</a>
+    <h1 class="display-5 text-center mb-4">Panier du {{ panier.date ? panier.date|date('d/m/Y à H:i') : '' }}</h1>
+
+    <h1 class="display-7">Produits commandés :</h1>
+
+    <table class="table table-bordered table-hover blanc">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Produit</th>
+                <th>Quantite</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pp in produitsPanier %}
+            <tr>
+                {% if pp.produit.photo is not null %}
+                    <td><img src="{{ asset('/uploads/' ~ pp.produit.photo) }}" alt="{{ pp.produit.nom }}" style="max-width: 38px;"></td>
+                {% else %}
+                    <td class="fst-italic">{{ 'produit.noPhoto'|trans }}</td>
+                {% endif %}
+                <td>{{ pp.produit }}</td>
+                <td>{{ pp.quantite }}</td>
+                <td>{{ pp.date ? pp.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td class="fst-italic" colspan="4">C'est normalement pas possible</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
