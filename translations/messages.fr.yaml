@@ -12,6 +12,8 @@ Prix: Prix
 Stock: Stock
 Image (jpg, png): Image (jpg, png)
 retour: < Retour
+voir: Voir
+modifier: Modifier
 Update: Enregistrer
 supprimer: Supprimer
 produit: 
@@ -20,8 +22,7 @@ produit:
   prix: Prix
   photo: Photo
   noPhoto: Pas de photo
-  voir: Voir
-  modifier: Modifier
   noProduit: Pas de produit
   creer: Créer produit
   modification: Modification du produit
+profil: Mon compte
