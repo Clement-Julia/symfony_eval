@@ -94,18 +94,15 @@ class ContenuPanierController extends AbstractController
     #[Route('/delete/{id}', name: 'contenu_panier_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, ContenuPanier $contenuPanier, ContenuPanierRepository $contenuPanierRepository): Response
     {
-        if($contenuPanier->getQuantite() > 1){
-            $quantite = $contenuPanier->getQuantite() - 1;
-            $contenuPanier->setQuantite($quantite);
-            $contenuPanierRepository->save($contenuPanier, true);
+        // if($contenuPanier->getQuantite() > 1){
+        //     $quantite = $contenuPanier->getQuantite() - 1;
+        //     $contenuPanier->setQuantite($quantite);
+        //     $contenuPanierRepository->save($contenuPanier, true);
             
-            $this->addFlash('success', 'Produit supprimé du panier');
-        }else{
-            if ($this->isCsrfTokenValid('delete' . $contenuPanier->getId(), $request->request->get('_token'))) {
-                $contenuPanierRepository->remove($contenuPanier, true);
-                $this->addFlash('success', 'Produit supprimé du panier');
-            }
-        }
+        //     $this->addFlash('success', 'Produit supprimé du panier');
+        // }else{
+        // }
+        $contenuPanierRepository->remove($contenuPanier, true);
 
         return $this->redirect($request->headers->get('referer'));
     }
