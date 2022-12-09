@@ -7,3 +7,21 @@ inscription: Inscription
 login: Login
 connexion: Connexion
 logout: Deconnexion
+Description: Description
+Prix: Price
+Stock: Stock
+Image (jpg, png): Image (jpg, png)
+retour: < Return
+Update: Update
+supprimer: Delete
+produit:
+  liste: List of products
+  nom: Name
+  prix: Price
+  photo: Picture
+  noPhoto: No picture
+  voir: View
+  modifier: Edit
+  noProduit: No products
+  creer: New product
+  modification: Edit product
