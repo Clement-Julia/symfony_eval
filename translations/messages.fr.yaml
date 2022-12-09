@@ -28,3 +28,14 @@ produit:
   creer: Créer produit
   modification: Modification du produit
 profil: Mon compte
+panier:
+  panier: Votre panier
+  vide: Votre panier est vide...
+  valider: Passer la commande
+  total: Prix total %:% %i% €
+  commande_total: Prix de la commande %:% %i% €
+  ajout: Produit ajouté au panier
+  edit_quantite: Quantité du produit modifié
+  supprimer: Produit supprimé du panier
+  complete: Votre commande a bien été finalisée
+accueil: Accueil

@@ -21,7 +21,7 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand blanc h-blanc" href="{{ path('produit_index') }}">Accueil</a>
+                <a class="navbar-brand blanc h-blanc" href="{{ path('produit_index') }}">{{ 'accueil'|trans() }}</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -66,34 +66,43 @@
     </div>
     <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="width: 35%">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasRightLabel">Votre panier</h5>
+            <h5 class="offcanvas-title h4 mx-auto" id="offcanvasRightLabel">{{ 'panier.panier'|trans() }}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
             {% set i = 0 %}
             {% if app.session.get('panier') %}
-                {% for panier in app.session.get('panier').contenuPaniers %}
-                    <div class="d-flex justify-content-around align-items-center">
-                        <img class="img-fluid img-thumbnail p-0" style="width: 12%;" src="{{ asset('uploads/' ~ panier.Produit.photo) }}">
-                        <span class="px-1 border-none rounded-1" style="background-color: rgb(0 0 0 / 37%);">{{ panier.quantite }}</span>
-                        <span>{{ panier.Produit.nom }}</span>
-                        <span>{{ panier.Produit.prix }}€</span>
-                        <a href="{{ path('contenu_panier_delete', {'id': panier.id}) }}" class="btn btn-sm d-flex align-items-center"><i class="fa-solid fa-trash-can fa-xs" style="color: red;"></i></a>
+                {% if app.session.get('panier').contenuPaniers|length > 0 %}
+                    {% for panier in app.session.get('panier').contenuPaniers %}
+                        {% set total = panier.Produit.prix * panier.quantite %}
+                        <div class="d-flex justify-content-around align-items-center">
+                            <img class="img-fluid img-thumbnail p-0" style="width: 15%;" src="{{ asset('uploads/' ~ panier.Produit.photo) }}">
+                            <div class="d-flex btn-group">
+                                <a href="{{ path('contenu_panier_edit', {'id': panier.id, 'status' : 'add'}) }}" class="btn btn-success btn-sm d-flex align-items-center"><i class="fa-solid fa-plus fa-xs"></i></a>
+                                <span class="px-2 border-none rounded-1" style="background-color: rgb(0 0 0 / 37%);">{{ panier.quantite }}</span>
+                                <a href="{{ path('contenu_panier_edit', {'id': panier.id, 'status' : 'less'}) }}" class="btn btn-danger btn-sm d-flex align-items-center"><i class="fa-solid fa-minus fa-xs"></i></a>
+                            </div>
+                            <span>{{ panier.Produit.nom }}</span>
+                            <span>{{ panier.Produit.prix }}€</span>
+                            <a href="{{ path('contenu_panier_delete', {'id': panier.id}) }}" class="btn btn-lg d-flex align-items-center"><i class="fa-solid fa-trash-can fa-xs" style="color: red;"></i></a>
+                        </div>
+                        <hr>
+                        {% set i = i + total %}
+                    {% else %}
+                        <p>{{ 'panier.vide'|trans() }}</p>
+                    {% endfor %}
+                    <div class="position-absolute bottom-0" style="width: 100%; background: RGBA(33,37,41,var(--bs-bg-opacity,1))">
+                        <div class="d-flex flex-column justify-content-center py-2" style="width:90%">
+                            <p>{{ 'panier.total'|trans({'%:%' : ':' ,'%i%' : i}) }}</p>
+                            <a href="{{ path('panier_edit', {id: app.session.get('panier').id}) }}" class="btn btn-sm btn-success">{{ 'panier.valider'|trans() }}</a>
+                        </div>
                     </div>
-                    <hr>
-                    {% set i = i + (panier.Produit.prix * panier.quantite) %}
                 {% else %}
-                    <p>Votre panier est vide...</p>
-                {% endfor %}
+                    <p>{{ 'panier.vide'|trans() }}</p>
+                {% endif %}
             {% else %}
-                <p>Votre panier est vide...</p>
+                <p>{{ 'panier.vide'|trans() }}</p>
             {% endif %}
-            <div class="position-absolute bottom-0" style="width: 100%; background: RGBA(33,37,41,var(--bs-bg-opacity,1))">
-                <div class="d-flex flex-column justify-content-center py-2" style="width:90%">
-                    <p>Prix total : {{ i }}€</p>
-                    {# <a href="{{ path('panier_edit', {id: app.session.get('panier').id}) }}" class="btn btn-sm btn-success">Passer la commande</a> #}
-                </div>
-            </div>
         </div>
     </div>
 
