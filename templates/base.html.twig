@@ -42,7 +42,7 @@
                             <a class="nav-link blanc h-blanc" href="{{ path('user_view', {'id': app.user.id}) }}">{{ 'profil'|trans }}</a>
                         </li>
                         <li class="nav-item ms-2 d-flex align-items-center">
-                            <button class="btn" title="Votre panier" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-cart-shopping me-2" style="font-size: x-large;"></i></button>
+                            <button class="btn blanc" title="Votre panier" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-cart-shopping me-2" style="font-size: x-large;"></i></button>
                         </li>
                         <li class="nav-item ms-2">
                             <a class="btn btn-outline-danger" href="{{ path('app_logout') }}">{{ 'logout'|trans }}</a>
@@ -91,7 +91,7 @@
             <div class="position-absolute bottom-0" style="width: 100%; background: RGBA(33,37,41,var(--bs-bg-opacity,1))">
                 <div class="d-flex flex-column justify-content-center py-2" style="width:90%">
                     <p>Prix total : {{ i }}€</p>
-                    <a href="{{ path('panier_edit', {id: app.session.get('panier').id}) }}" class="btn btn-sm btn-success">Passer la commande</a>
+                    {# <a href="{{ path('panier_edit', {id: app.session.get('panier').id}) }}" class="btn btn-sm btn-success">Passer la commande</a> #}
                 </div>
             </div>
         </div>
