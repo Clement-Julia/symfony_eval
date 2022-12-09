@@ -2,6 +2,8 @@ Nom: Lastname
 Prenom: Firstname
 Email: Email
 Password: Passwords
+email: Email
+password: Passwords
 register: Register
 inscription: Inscription
 login: Login

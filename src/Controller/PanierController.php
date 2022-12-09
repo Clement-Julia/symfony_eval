@@ -22,26 +22,13 @@ class PanierController extends AbstractController
     }
 
     #[Route('/add', name: 'panier_add', methods: ['GET', 'POST'])]
-    public function add(Request $request, PanierRepository $panierRepository): Response
+    public function add(PanierRepository $panierRepository): Response
     {
-        $panier = new Panier();
-        $form = $this->createForm(PanierType::class, $panier);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $panierRepository->save($panier, true);
-
-            return $this->redirectToRoute('panier_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('panier/add.html.twig', [
-            'panier' => $panier,
-            'form' => $form,
-        ]);
+        return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/view/{id}', name: 'panier_view', methods: ['GET'])]
-    public function show(Panier $panier): Response
+    public function view(Panier $panier): Response
     {
         $produitsPanier = $panier->getContenuPaniers();
 
@@ -54,19 +41,12 @@ class PanierController extends AbstractController
     #[Route('/edit/{id}', name: 'panier_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Panier $panier, PanierRepository $panierRepository): Response
     {
-        $form = $this->createForm(PanierType::class, $panier);
-        $form->handleRequest($request);
+        $panier->setEtat(true);
+        $panierRepository->save($panier, true);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $panierRepository->save($panier, true);
+        $this->addFlash('success', 'Votre commande a bien été finalisée');
+        return $this->redirect($request->headers->get('referer'));
 
-            return $this->redirectToRoute('panier_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('panier/edit.html.twig', [
-            'panier' => $panier,
-            'form' => $form,
-        ]);
     }
 
     #[Route('/delete/{id}', name: 'panier_delete', methods: ['POST'])]
@@ -76,6 +56,6 @@ class PanierController extends AbstractController
             $panierRepository->remove($panier, true);
         }
 
-        return $this->redirectToRoute('panier_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
     }
 }

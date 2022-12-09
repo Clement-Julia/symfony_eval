@@ -33,9 +33,9 @@
             <div class="card-footer">
                 <div class="d-flex justify-content-center">
                     {% if is_granted('ROLE_ADMIN') %}
-                        <a class="btn btn-outline-success" href="">Ajouter au panier</a>
+                        <a class="btn btn-outline-success" href="{{ path('contenu_panier_add', {'id': produit.id}) }}">Ajouter au panier</a>
                     {% else %}
-                        <a class="btn btn-outline disabled" href="">Ajouter au panier</a>
+                        <a class="btn btn-outline disabled" href="{{ path('contenu_panier_add', {'id': produit.id}) }}">Ajouter au panier</a>
                     {% endif %}
                 </div>
             </div>

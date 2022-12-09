@@ -21,12 +21,12 @@ class PanierRepository extends ServiceEntityRepository
         parent::__construct($registry, Panier::class);
     }
 
-    public function save(Panier $entity, bool $flush = false): void
+    public function save(Panier $entity, bool $flush = false)
     {
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {
-            $this->getEntityManager()->flush();
+            return $this->getEntityManager()->flush();
         }
     }
 
@@ -37,6 +37,17 @@ class PanierRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findCurrentBasket($id): ?Array
+    {
+        return $this->createQueryBuilder('panier')
+            ->andWhere('panier.user = :id')
+            ->andWhere('panier.etat = 0')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
 //    /**
