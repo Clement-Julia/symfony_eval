@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 #[UniqueEntity('nom', message: 'produit.exist')]
@@ -47,8 +48,9 @@ class Produit
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
-    public function __construct()
+    public function __construct(RequestStack $requestStack = null)
     {
+        $this->requestStack = $requestStack;
     }
 
     public function getId(): ?int
@@ -114,5 +116,18 @@ class Produit
         $this->photo = $photo;
 
         return $this;
+    }
+
+    public function getPanier()
+    {
+        // $session = $this->requestStack->getSession();
+
+        // $session->set('attribute-name', 'attribute-value');
+
+        // $foo = $session->get('foo');
+
+        // $filters = $session->get('filters', []);
+
+        // ...
     }
 }

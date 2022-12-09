@@ -4,7 +4,6 @@
 
 {% block body %}
     <h1 class="display-5">Liste des produits</h1>
-
     <table class="table">
         <thead>
             <tr>
@@ -34,7 +33,7 @@
                 </td>
                 <td>
                     <div class="btn-group">
-                        <a class="btn btn-outline-primary" href="{{ path('produit_show', {'id': produit.id}) }}">Show</a>
+                        <a class="btn btn-outline-primary" href="{{ path('produit_view', {'id': produit.id}) }}">Show</a>
                         {% if is_granted('ROLE_ADMIN') %}
                             <a class="btn btn-outline-warning" href="{{ path('produit_edit', {'id': produit.id}) }}">Edit</a>
                         {% endif %}
@@ -52,5 +51,5 @@
     {% if is_granted('ROLE_ADMIN') %}
     {% endif %}
     
-    <a class="btn btn-outline-success" href="{{ path('produit_new') }}">Create new</a>
+    <a class="btn btn-outline-success" href="{{ path('produit_add') }}">Create new</a>
 {% endblock %}
