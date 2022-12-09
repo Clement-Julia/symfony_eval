@@ -10,10 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/panier')]
+#[Route('{_locale}/panier')]
 class PanierController extends AbstractController
 {
-    #[Route('/', name: 'app_panier_index', methods: ['GET'])]
+    #[Route('/', name: 'panier_index', methods: ['GET'])]
     public function index(PanierRepository $panierRepository): Response
     {
         return $this->render('panier/index.html.twig', [
@@ -21,58 +21,38 @@ class PanierController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_panier_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PanierRepository $panierRepository): Response
+    #[Route('/add', name: 'panier_add', methods: ['GET', 'POST'])]
+    public function add(PanierRepository $panierRepository): Response
     {
-        $panier = new Panier();
-        $form = $this->createForm(PanierType::class, $panier);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $panierRepository->save($panier, true);
-
-            return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('panier/new.html.twig', [
-            'panier' => $panier,
-            'form' => $form,
-        ]);
+        return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}', name: 'app_panier_show', methods: ['GET'])]
-    public function show(Panier $panier): Response
+    #[Route('/view/{id}', name: 'panier_view', methods: ['GET'])]
+    public function view(Panier $panier): Response
     {
         return $this->render('panier/show.html.twig', [
             'panier' => $panier,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_panier_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'panier_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Panier $panier, PanierRepository $panierRepository): Response
     {
-        $form = $this->createForm(PanierType::class, $panier);
-        $form->handleRequest($request);
+        $panier->setEtat(true);
+        $panierRepository->save($panier, true);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $panierRepository->save($panier, true);
+        $this->addFlash('success', 'Votre commande a bien été finalisée');
+        return $this->redirect($request->headers->get('referer'));
 
-            return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('panier/edit.html.twig', [
-            'panier' => $panier,
-            'form' => $form,
-        ]);
     }
 
-    #[Route('/{id}', name: 'app_panier_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'panier_delete', methods: ['POST'])]
     public function delete(Request $request, Panier $panier, PanierRepository $panierRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$panier->getId(), $request->request->get('_token'))) {
             $panierRepository->remove($panier, true);
         }
 
-        return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
     }
 }
