@@ -1,18 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste produits{% endblock %}
+{% block title %}{{ 'produit.liste'|trans }}{% endblock %}
 
 {% block body %}
-    <h1 class="display-5">Liste des produits</h1>
-    <table class="table">
+    <h1 class="display-5 mt-4">{{ 'produit.liste'|trans }}</h1>
+
+    <table class="table table-bordered table-hover blanc">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nom</th>
+                <th>{{ 'produit.nom'|trans }}</th>
                 <th>Description</th>
-                <th>Prix</th>
+                <th>{{ 'produit.prix'|trans }}</th>
                 <th>Stock</th>
-                <th>Photo</th>
+                <th>{{ 'produit.photo'|trans }}</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -28,28 +29,27 @@
                     {% if produit.photo is not null %}
                         <img src="{{ asset('/uploads/' ~ produit.photo) }}" alt="{{ produit.nom }}" style="max-width: 38px;">
                     {% else %}
-                        <div class="fst-italic">Pas de photo</div>
+                        <div class="fst-italic">{{ 'produit.noPhoto'|trans }}</div>
                     {% endif %}
                 </td>
                 <td>
                     <div class="btn-group">
-                        <a class="btn btn-outline-primary" href="{{ path('produit_view', {'id': produit.id}) }}">Show</a>
+                        <a class="btn btn-outline-primary" href="{{ path('produit_view', {'id': produit.id}) }}">{{ 'voir'|trans }}</a>
                         {% if is_granted('ROLE_ADMIN') %}
-                            <a class="btn btn-outline-warning" href="{{ path('produit_edit', {'id': produit.id}) }}">Edit</a>
+                            <a class="btn btn-outline-warning" href="{{ path('produit_edit', {'id': produit.id}) }}">{{ 'modifier'|trans }}</a>
                         {% endif %}
                     </div>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">No records found</td>
+                <td colspan="7">{{ 'produit.noProduit'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
     {% if is_granted('ROLE_ADMIN') %}
+        <a class="btn btn-outline-success" href="{{ path('produit_add') }}">{{ 'produit.creer'|trans }}</a>
     {% endif %}
-    
-    <a class="btn btn-outline-success" href="{{ path('produit_add') }}">Create new</a>
 {% endblock %}

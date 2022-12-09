@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <a class="btn btn-outline-primary" href="{{ path('user_view', {'id':app.user.id}) }}">{{'retour'|trans}}</a>
+    <h1 class="display-5 text-center">Edit user</h1>
+
+    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+
+{% endblock %}

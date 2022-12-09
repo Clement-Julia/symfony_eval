@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\AuthAuthenticator;
+use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,11 +32,15 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $user->setRoles(['ROLE_USER']);
+            $datetimeNow = new \DateTime('now', new DateTimeZone('Europe/Paris'));
+            $user->setDateInscription($datetimeNow);
 
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
 
+            $this->addFlash('success', 'Vous êtes inscrit et connecté !');
             return $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,

@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Panier index</h1>
 
-    <table class="table">
+    <table class="table table-bordered table-hover blanc">
         <thead>
             <tr>
                 <th>Id</th>
@@ -21,8 +21,8 @@
                 <td>{{ panier.date ? panier.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ panier.etat ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('app_panier_show', {'id': panier.id}) }}">show</a>
-                    <a href="{{ path('app_panier_edit', {'id': panier.id}) }}">edit</a>
+                    <a href="{{ path('panier_view', {'id': panier.id}) }}">show</a>
+                    <a href="{{ path('panier_edit', {'id': panier.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_panier_new') }}">Create new</a>
+    <a href="{{ path('app_panier_add') }}">Create new</a>
 {% endblock %}

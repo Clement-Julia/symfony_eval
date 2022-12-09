@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/contenu/panier')]
+#[Route('{_locale}/contenu/panier')]
 class ContenuPanierController extends AbstractController
 {
     #[Route('/', name: 'contenu_panier_index', methods: ['GET'])]
@@ -68,7 +68,7 @@ class ContenuPanierController extends AbstractController
     #[Route('/view/{id}', name: 'contenu_panier_view', methods: ['GET'])]
     public function view(ContenuPanier $contenuPanier): Response
     {
-        return $this->render('contenu_panier/show.html.twig', [
+        return $this->render('contenu_panier/view.html.twig', [
             'contenu_panier' => $contenuPanier,
         ]);
     }
@@ -82,7 +82,7 @@ class ContenuPanierController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $contenuPanierRepository->save($contenuPanier, true);
 
-            return $this->redirectToRoute('app_contenu_panier_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('contenu_panier_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('contenu_panier/edit.html.twig', [

@@ -118,16 +118,8 @@ class Produit
         return $this;
     }
 
-    public function getPanier()
+    public function __toString()
     {
-        // $session = $this->requestStack->getSession();
-
-        // $session->set('attribute-name', 'attribute-value');
-
-        // $foo = $session->get('foo');
-
-        // $filters = $session->get('filters', []);
-
-        // ...
+        return $this->nom;
     }
 }
