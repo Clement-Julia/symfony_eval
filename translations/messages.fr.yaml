@@ -65,6 +65,19 @@ contenuPanier:
   erreur: C'est normalement pas possible
   prix : Prix
   prixTotal : Prix total
-
+error:
+  404: 404
+  page_404: Page 404
+  oups: Oups !
+  page_non_trouve: Page non trouvé
+  page_non_trouve_exp: La page que vous recherchez n'existe pas
+  home: Retourner sur le site
+  500: 500
+  page_500: Page 500
+  intern_erreur: Erreur interne du serveur
+  intern_erreur_exp: Malheureusement, nous rencontrons des difficultés pour charger la page que vous recherchez. S'il vous plaît revenez plus tard
+  page_erreur: Erreur
+  page_erreur_exp: Cette page a rencontré un problème. Veuillez changer de page
+  page_precedente: Retourner sur la page précédente
 successInscriConnex: Vous êtes inscrit et connecté !
 accueil: Accueil

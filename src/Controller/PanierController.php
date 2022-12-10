@@ -28,6 +28,7 @@ class PanierController extends AbstractController
     #[Route('/edit/{id}', name: 'panier_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Panier $panier, PanierRepository $panierRepository, TranslatorInterface $translator): Response
     {
+        // On valide le panier en le faisant passer à un etat true
         $panier->setEtat(true);
         $panierRepository->save($panier, true);
 
