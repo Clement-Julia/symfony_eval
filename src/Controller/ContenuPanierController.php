@@ -23,7 +23,7 @@ class ContenuPanierController extends AbstractController
 {
 
     #[Route('/add/{id}', name: 'contenu_panier_add', methods: ['GET', 'POST'])]
-    public function add(Produit $Produit, PanierRepository $panierRepository, ContenuPanierRepository $contenuPanierRepository): Response
+    public function add(Produit $Produit, PanierRepository $panierRepository, ContenuPanierRepository $contenuPanierRepository, TranslatorInterface $translator): Response
     {
         $user = $this->getUser();
 
@@ -55,7 +55,7 @@ class ContenuPanierController extends AbstractController
         $contenuPanierRepository->save($ContenuPanier, true);
 
         
-        $this->addFlash('success', 'panier.ajout');
+        $this->addFlash('success', $translator->trans('panier.ajout'));
         return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
     }
 

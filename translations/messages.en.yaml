@@ -1,14 +1,14 @@
 Nom: Lastname
 Prenom: Firstname
 Email: Email
-Password: Passwords
+Password: Password
 email: Email
-password: Passwords
+password: Password
 register: Register
-inscription: Inscription
+inscription: Register
 login: Login
-connexion: Connexion
-logout: Deconnexion
+connexion: Login
+logout: Logout
 Description: Description
 Prix: Price
 Stock: Stock
@@ -19,6 +19,10 @@ modifier: Edit
 Update: Update
 supprimer: Delete
 produit:
+  produit: Product
+  add: Add to basket
+  noDesc: No description
+  nbExemplaires: copy(s) in stock
   liste: List of products
   nom: Name
   prix: Price
@@ -27,4 +31,38 @@ produit:
   noProduit: No products
   creer: New product
   modification: Edit product
-profil: My account
+  errorUpld: Unable to upload image
+  successAjout: Product added successfully
+  successModif: Product updated successfully
+  successSupr: Product deleted successfully
+profil:
+  titre: My profile
+  role: Role(s)
+  nom: Name
+  Prenom: Firstname
+  inscription: Registered since
+  commandes: My orders
+  commandeDu: Order from
+  commandePasse: Order placed on :
+  btnCommande: Show the order
+  noCommande: No order history
+  edit: Profile updated
+panier:
+  panier: Your basket
+  vide: Your basket is empty...
+  valider: Place the order
+  total: Total price %:% %i% €
+  commande_total: Order price %:% %i% €
+  ajout: Product added to basket
+  edit_quantite: Product quantity modified
+  supprimer: Product deleted from basket
+  complete: Your order has been successfully completed
+contenuPanier:
+  title: Basket
+  panierDu: Basket from
+  prdCommande: Ordered products :
+  quantite: Quantity
+  erreur: This is not normally possible
+
+successInscriConnex: You are registered and logged in !
+accueil: Home

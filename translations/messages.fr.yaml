@@ -19,6 +19,10 @@ modifier: Modifier
 Update: Enregistrer
 supprimer: Supprimer
 produit: 
+  produit: Produit
+  add: Ajouter au panier
+  noDesc: Pas de description
+  nbExemplaires: exemplaire(s) en stock
   liste: Liste des produits
   nom: Nom
   prix: Prix
@@ -27,7 +31,22 @@ produit:
   noProduit: Pas de produit
   creer: Créer produit
   modification: Modification du produit
-profil: Mon compte
+  errorUpld: Impossible d'uploader l'image
+  successAjout: Produit ajouté
+  successModif: Produit modifié
+  successSupr: Produit supprimé
+profil:
+  titre: Mon profil
+  role: Rôle(s)
+  nom: Nom
+  Prenom: Prénom
+  inscription: Inscrit depuis le
+  commandes: Mes commandes
+  commandeDu: Commande du
+  commandePasse: Commande passé le :
+  btnCommande: Voir la commande
+  noCommande: Aucun historique de commande
+  successEdit: Profil modifié
 panier:
   panier: Votre panier
   vide: Votre panier est vide...
@@ -38,4 +57,12 @@ panier:
   edit_quantite: Quantité du produit modifié
   supprimer: Produit supprimé du panier
   complete: Votre commande a bien été finalisée
+contenuPanier:
+  title: Panier
+  panierDu: Panier du
+  prdCommande: Produits commandés :
+  quantite: Quantité
+  erreur: C'est normalement pas possible
+
+successInscriConnex: Vous êtes inscrit et connecté !
 accueil: Accueil

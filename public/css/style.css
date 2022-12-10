@@ -29,7 +29,7 @@ body
     color: #cccccc;
 }
 .h-blanc:hover {
-    color: #ababab;
+    color: rgb(244, 242, 238);
 }
 .display-7 {
     font-size: calc(1rem + 1.5vw);
