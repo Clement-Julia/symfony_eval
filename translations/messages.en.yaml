@@ -63,6 +63,8 @@ contenuPanier:
   prdCommande: Ordered products :
   quantite: Quantity
   erreur: This is not normally possible
+  prix : Price
+  prixTotal : Total price
 
 successInscriConnex: You are registered and logged in !
 accueil: Home

@@ -63,6 +63,8 @@ contenuPanier:
   prdCommande: Produits commandés :
   quantite: Quantité
   erreur: C'est normalement pas possible
+  prix : Prix
+  prixTotal : Prix total
 
 successInscriConnex: Vous êtes inscrit et connecté !
 accueil: Accueil

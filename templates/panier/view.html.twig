@@ -13,27 +13,35 @@
             <tr>
                 <th>Image</th>
                 <th>{{ 'produit.produit'|trans }}</th>
+                <th>{{ 'contenuPanier.prix'|trans }}</th>
                 <th>{{ 'contenuPanier.quantite'|trans }}</th>
+                <th>{{ 'contenuPanier.prixTotal'|trans }}</th>
                 <th>Date</th>
             </tr>
         </thead>
         <tbody>
+            {% set i = 0 %}
             {% for pp in produitsPanier %}
-            <tr>
-                {% if pp.produit.photo is not null %}
-                    <td><img src="{{ asset('/uploads/' ~ pp.produit.photo) }}" alt="{{ pp.produit.nom }}" style="max-width: 38px;"></td>
-                {% else %}
-                    <td class="fst-italic">{{ 'produit.noPhoto'|trans }}</td>
-                {% endif %}
-                <td>{{ pp.produit }}</td>
-                <td>{{ pp.quantite }}</td>
-                <td>{{ pp.date ? pp.date|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <td class="fst-italic" colspan="4">{{ 'contenuPanier.erreur'|trans }}</td>
-            </tr>
-        {% endfor %}
+                {% set total = pp.quantite * pp.Produit.prix %}
+                <tr>
+                    {% if pp.produit.photo is not null %}
+                        <td><img src="{{ asset('/uploads/' ~ pp.produit.photo) }}" alt="{{ pp.produit.nom }}" style="max-width: 38px;"></td>
+                    {% else %}
+                        <td class="fst-italic">{{ 'produit.noPhoto'|trans }}</td>
+                    {% endif %}
+                    <td>{{ pp.produit }}</td>
+                    <td>{{ pp.Produit.prix }}€</td>
+                    <td>{{ pp.quantite }}</td>
+                    <td>{{ total }}€</td>
+                    <td>{{ pp.date ? pp.date|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            {% set i = i + total %}
+            {% else %}
+                <tr>
+                    <td class="fst-italic" colspan="4">C'est normalement pas possible</td>
+                </tr>
+            {% endfor %}
+            <td colspan="6"><span>{{ 'panier.commande_total'|trans({'%:%' : ':' ,'%i%' : i}) }}</span></td>
         </tbody>
     </table>
 
