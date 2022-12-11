@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('{_locale}/produit')]
 class ProduitController extends AbstractController
@@ -23,7 +24,7 @@ class ProduitController extends AbstractController
     }
 
     #[Route('/add', name: 'produit_add', methods: ['GET', 'POST'])]
-    public function add(Request $request, ProduitRepository $produitRepository): Response
+    public function add(Request $request, ProduitRepository $produitRepository, TranslatorInterface $translator): Response
     {
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
@@ -42,20 +43,20 @@ class ProduitController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    $this->addFlash('danger', 'Impossible d\'uploader l\'image');
+                    $this->addFlash('danger', $translator->trans('produit.errorUpld'));
                     return $this->redirectToRoute('produit_index');
                 }
                 $produit->setPhoto($newFilename);
             }
 
             $produitRepository->save($produit, true);
-            $this->addFlash('success', 'Produit ajouté');
+            $this->addFlash('success', $translator->trans('produit.successAjout'));
             return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('produit/new.html.twig', [
+        return $this->render('produit/new.html.twig', [
             'produit' => $produit,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -68,7 +69,7 @@ class ProduitController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'produit_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Produit $produit, ProduitRepository $produitRepository): Response
+    public function edit(Request $request, Produit $produit, ProduitRepository $produitRepository, TranslatorInterface $translator): Response
     {
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
@@ -77,12 +78,13 @@ class ProduitController extends AbstractController
 
             $imageFile = $form->get('photo')->getData();
             $oldFile = $produit->getPhoto();
+           
+            if (!empty($imageFile)) {
 
-            if($oldFile) {
-                unlink(__DIR__ . '/../../public/uploads/' . $oldFile);
-            }
+                if($oldFile && file_exists(__DIR__ . '/../../public/uploads/' . $oldFile)) {
+                    unlink(__DIR__ . '/../../public/uploads/' . $oldFile);
+                }
 
-            if ($imageFile) {
                 $newFilename = uniqid() . '.' . $imageFile->guessExtension();
 
                 try {
@@ -91,29 +93,28 @@ class ProduitController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    $this->addFlash('danger', 'Impossible d\'uploader l\'image');
+                    $this->addFlash('danger', $translator->trans('produit.errorUpld'));
                     return $this->redirectToRoute('produit_index');
                 }
                 $produit->setPhoto($newFilename);
             }
-
             $produitRepository->save($produit, true);
-            $this->addFlash('success', 'Produit modifié');
+            $this->addFlash('success', $translator->trans('produit.successModif'));
             return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('produit/edit.html.twig', [
+        return $this->render('produit/edit.html.twig', [
             'produit' => $produit,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
     #[Route('/delete/{id}', name: 'produit_delete', methods: ['POST'])]
-    public function delete(Request $request, Produit $produit, ProduitRepository $produitRepository): Response
+    public function delete(Request $request, Produit $produit, ProduitRepository $produitRepository, TranslatorInterface $translator): Response
     {
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
             $produitRepository->remove($produit, true);
-            $this->addFlash('success', 'Produit supprimé');
+            $this->addFlash('success', $translator->trans('produit.successSuppr'));
         }
 
         return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);

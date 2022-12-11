@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ 'contenuPanier.title'|trans }}{% endblock %}
+
+{% block body %}
+
+    <h1 class="display-7">{{ 'contenuPanier.prdCommande'|trans }}</h1>
+
+    {% for p in paniers %}
+        <div class="card bg-dark mt-3">
+            <div class="card-header d-flex justify-content-between">
+                <div>{{ 'panier.idPanier'|trans }} : {{ p.id}}</div>
+                <div>{{ 'panier.utilisateur'|trans }} : {{ p.user.id}} - {{ p.user.email}}</div>
+            </div>
+            <div class="card-body pb-0">
+                {% for c in p.contenuPaniers %}
+                <div class="d-flex justify-content-between">
+                    <div>{{ 'produit.produit'|trans }} : {{ c.produit }}</div>
+                    <div>{{ 'panier.prixUnitaire'|trans }} : {{ c.produit.prix }}€</div>
+                    <div>{{ 'contenuPanier.quantite'|trans }} : {{ c.quantite }}</div>
+                </div>
+                <hr>
+                {% else %}
+                    <div class="fst-italic">{{ 'contenuPanier.erreur'|trans }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="fst-italic">{{ 'panier.noPanier'|trans }}</div>
+    {% endfor %}
+
+{% endblock %}

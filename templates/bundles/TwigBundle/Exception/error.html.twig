@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ 'error.page_erreur'|trans }}{% endblock %}
+
+{%block stylesheets %}
+    {{ parent() }}
+    <link href="{{asset('css/error.css')}}" rel="stylesheet">
+{%endblock%}
+
+{% block body %}
+    <h1 class="mt-5">:(</h1><br>
+    <h2 class="mb-5"><span>{{ 'error.page_erreur_exp'|trans }}</span></h2>
+    <h3><a href="{{ path('produit_index') }}" class="me-2">{{ 'error.home'|trans }}</a>|<a class="ms-2" href="javascript:history.back()">{{ 'error.page_precedente'|trans }}</a></h3>
+{% endblock %}

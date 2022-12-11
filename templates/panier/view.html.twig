@@ -1,39 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Panier{% endblock %}
+{% block title %} {{ 'contenuPanier.title'|trans }}{% endblock %}
 
 {% block body %}
     <a class="btn btn-outline-primary" href="{{ path('user_view', {'id': app.user.id}) }}">{{ 'retour'|trans }}</a>
-    <h1 class="display-5 text-center mb-4">Panier du {{ panier.date ? panier.date|date('d/m/Y à H:i') : '' }}</h1>
+    <h1 class="display-5 text-center mb-4">{{ 'contenuPanier.panierDu'|trans }} {{ panier.date ? panier.date|date('d/m/Y à H:i') : '' }}</h1>
 
-    <h1 class="display-7">Produits commandés :</h1>
+    <h1 class="display-7">{{ 'contenuPanier.prdCommande'|trans }}</h1>
 
     <table class="table table-bordered table-hover blanc">
         <thead>
             <tr>
                 <th>Image</th>
-                <th>Produit</th>
-                <th>Quantite</th>
+                <th>{{ 'produit.produit'|trans }}</th>
+                <th>{{ 'contenuPanier.prix'|trans }}</th>
+                <th>{{ 'contenuPanier.quantite'|trans }}</th>
+                <th>{{ 'contenuPanier.prixTotal'|trans }}</th>
                 <th>Date</th>
             </tr>
         </thead>
         <tbody>
+            {% set i = 0 %}
             {% for pp in produitsPanier %}
-            <tr>
-                {% if pp.produit.photo is not null %}
-                    <td><img src="{{ asset('/uploads/' ~ pp.produit.photo) }}" alt="{{ pp.produit.nom }}" style="max-width: 38px;"></td>
-                {% else %}
-                    <td class="fst-italic">{{ 'produit.noPhoto'|trans }}</td>
-                {% endif %}
-                <td>{{ pp.produit }}</td>
-                <td>{{ pp.quantite }}</td>
-                <td>{{ pp.date ? pp.date|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <td class="fst-italic" colspan="4">C'est normalement pas possible</td>
-            </tr>
-        {% endfor %}
+                {% set total = pp.quantite * pp.Produit.prix %}
+                <tr>
+                    {% if pp.produit.photo is not null %}
+                        <td><img src="{{ asset('/uploads/' ~ pp.produit.photo) }}" alt="{{ pp.produit.nom }}" style="max-width: 38px;"></td>
+                    {% else %}
+                        <td class="fst-italic">{{ 'produit.noPhoto'|trans }}</td>
+                    {% endif %}
+                    <td>{{ pp.produit }}</td>
+                    <td>{{ pp.Produit.prix }}€</td>
+                    <td>{{ pp.quantite }}</td>
+                    <td>{{ total }}€</td>
+                    <td>{{ pp.date ? pp.date|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            {% set i = i + total %}
+            {% else %}
+                <tr>
+                    <td class="fst-italic" colspan="4">C'est normalement pas possible</td>
+                </tr>
+            {% endfor %}
+            <td colspan="6"><span>{{ 'panier.commande_total'|trans({'%:%' : ':' ,'%i%' : i}) }}</span></td>
         </tbody>
     </table>
 

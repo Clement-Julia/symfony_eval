@@ -3,11 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use DateTime;
+use DateTimeZone;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -54,6 +57,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
 
         $this->save($user, true);
+    }
+
+    // Retourne les utilisateurs inscrits aujourd'hui, du plus récent au plus ancien
+    public function findUsersSortedByDate(): array
+    {
+        $dt = new DateTime('now', new DateTimeZone('Europe/Paris'));
+        $d = $dt->format('Y-m-d');
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.dateInscription LIKE :d')
+            ->setParameter('d', '%'.$d.'%')
+            ->orderBy('u.dateInscription', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
 //    /**

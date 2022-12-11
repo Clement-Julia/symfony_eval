@@ -1,14 +1,14 @@
 Nom: Lastname
 Prenom: Firstname
 Email: Email
-Password: Passwords
+Password: Password
 email: Email
-password: Passwords
+password: Password
 register: Register
-inscription: Inscription
+inscription: Register
 login: Login
-connexion: Connexion
-logout: Deconnexion
+connexion: Login
+logout: Logout
 Description: Description
 Prix: Price
 Stock: Stock
@@ -19,6 +19,10 @@ modifier: Edit
 Update: Update
 supprimer: Delete
 produit:
+  produit: Product
+  add: Add to basket
+  noDesc: No description
+  nbExemplaires: copy(s) in stock
   liste: List of products
   nom: Name
   prix: Price
@@ -27,4 +31,62 @@ produit:
   noProduit: No products
   creer: New product
   modification: Edit product
-profil: My account
+  errorUpld: Unable to upload image
+  successAjout: Product added successfully
+  successModif: Product updated successfully
+  successSupr: Product deleted successfully
+profil:
+  titre: My profile
+  role: Role(s)
+  nom: Name
+  Prenom: Firstname
+  inscription: Registered since
+  commandes: My orders
+  commandeDu: Order from
+  commandePasse: Order placed on :
+  btnCommande: Show the order
+  noCommande: No order history
+  edit: Profile updated
+panier:
+  panier: Your basket
+  vide: Your basket is empty...
+  valider: Place the order
+  total: Total price %:% %i% €
+  commande_total: Order price %:% %i% €
+  ajout: Product added to basket
+  edit_quantite: Product quantity modified
+  supprimer: Product deleted from basket
+  complete: Your order has been successfully completed
+  idPanier: Basket id
+  utilisateur: User
+  prixUnitaire: Unit price
+  noPanier: No active baskets
+contenuPanier:
+  title: Basket
+  panierDu: Basket from
+  prdCommande: Ordered products :
+  quantite: Quantity
+  erreur: This is not normally possible
+  prix : Price
+  prixTotal : Total price
+  
+noUser: No user found
+listeUser: List of users
+listePanier: List of baskets
+
+error:
+  404: 404
+  oups: Oups !
+  page_non_trouve: Page not found
+  page_non_trouve_exp: The page you’re looking for doesn’t exist
+  home: Go back on site
+  500: 500
+  page_500: Page 500
+  intern_erreur: Internal Server Error
+  intern_erreur_exp: Unfortunately we're having trouble loading the page you are looking for. Please come back in a while
+  page_erreur: Error
+  page_erreur_exp: This page has encountered a problem. Please change page
+  page_precedente: Go back
+
+successInscriConnex: You are registered and logged in !
+accueil: Home

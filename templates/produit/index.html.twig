@@ -5,10 +5,9 @@
 {% block body %}
     <h1 class="display-5 mt-4">{{ 'produit.liste'|trans }}</h1>
 
-    <table class="table table-bordered table-hover blanc">
+    <table class="table table-bordered table-hover blanc w-100">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>{{ 'produit.nom'|trans }}</th>
                 <th>Description</th>
                 <th>{{ 'produit.prix'|trans }}</th>
@@ -20,19 +19,18 @@
         <tbody>
         {% for produit in produits %}
             <tr>
-                <td>{{ produit.id }}</td>
-                <td>{{ produit.nom }}</td>
-                <td>{{ produit.description }}</td>
-                <td>{{ produit.prix }}</td>
-                <td>{{ produit.stock }}</td>
-                <td> 
+                <td style="width: 10%;">{{ produit.nom }}</td>
+                <td style="width: 60%;">{{ produit.description }}</td>
+                <td style="width: auto;">{{ produit.prix }}</td>
+                <td style="width: auto;">{{ produit.stock }}</td>
+                <td style="width: auto;"> 
                     {% if produit.photo is not null %}
                         <img src="{{ asset('/uploads/' ~ produit.photo) }}" alt="{{ produit.nom }}" style="max-width: 38px;">
                     {% else %}
                         <div class="fst-italic">{{ 'produit.noPhoto'|trans }}</div>
                     {% endif %}
                 </td>
-                <td>
+                <td style="width: auto;">
                     <div class="btn-group">
                         <a class="btn btn-outline-primary" href="{{ path('produit_view', {'id': produit.id}) }}">{{ 'voir'|trans }}</a>
                         {% if is_granted('ROLE_ADMIN') %}

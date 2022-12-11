@@ -16,25 +16,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('{_locale}/contenu/panier')]
 class ContenuPanierController extends AbstractController
 {
-    #[Route('/', name: 'contenu_panier_index', methods: ['GET'])]
-    public function index(ContenuPanierRepository $contenuPanierRepository): Response
-    {
-        return $this->render('contenu_panier/index.html.twig', [
-            'contenu_paniers' => $contenuPanierRepository->findAll(),
-        ]);
-    }
 
     #[Route('/add/{id}', name: 'contenu_panier_add', methods: ['GET', 'POST'])]
-    public function add(Produit $Produit, PanierRepository $panierRepository, ContenuPanierRepository $contenuPanierRepository): Response
+    public function add(Produit $Produit, PanierRepository $panierRepository, ContenuPanierRepository $contenuPanierRepository, TranslatorInterface $translator): Response
     {
+        // On récupère l'utilisateur actuel et son panier actif
         $user = $this->getUser();
-
         $Panier = $panierRepository->findCurrentBasket($user->getId());
 
+        // S'il ne possède pas de panier, on le définie
         if (!$Panier) {
             $Panier = new Panier();
             $Panier->setUser($this->getUser());
@@ -48,6 +43,7 @@ class ContenuPanierController extends AbstractController
 
         $ContenuPanier = $contenuPanierRepository->findOneBy(["Panier" => $Panier->getId(), "Produit" => $Produit->getId()]);
 
+        // Si le produit est déjà dans le panier on ajoute une quantité, sinon on le créé
         if(!$ContenuPanier){
             $ContenuPanier = new ContenuPanier();
             $ContenuPanier->setPanier($Panier);
@@ -61,48 +57,43 @@ class ContenuPanierController extends AbstractController
         $contenuPanierRepository->save($ContenuPanier, true);
 
         
-        $this->addFlash('success', 'Produit ajouté au panier');
+        $this->addFlash('success', $translator->trans('panier.ajout'));
         return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/view/{id}', name: 'contenu_panier_view', methods: ['GET'])]
-    public function view(ContenuPanier $contenuPanier): Response
+    #[Route('/edit/{status}/{id}', name: 'contenu_panier_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, ContenuPanier $contenuPanier, ContenuPanierRepository $contenuPanierRepository, TranslatorInterface $translator): Response
     {
-        return $this->render('contenu_panier/view.html.twig', [
-            'contenu_panier' => $contenuPanier,
-        ]);
-    }
+        // Récupération du paramètre statut qui défini s'il s'agit d'un ajout ou d'un retrait
+        $routeParams = (object)$request->attributes->get('_route_params');
+        $status = $routeParams->status;
 
-    #[Route('/edit/{id}', name: 'contenu_panier_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, ContenuPanier $contenuPanier, ContenuPanierRepository $contenuPanierRepository): Response
-    {
-        $form = $this->createForm(ContenuPanierType::class, $contenuPanier);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
+        // En fonction du statut et de la quantité, on ajoute ou on en enlève. S'il n'y a suffisamment de quantité on le supprime
+        if($contenuPanier->getQuantite() > 1 || $status == "add"){
+            if($status == "add"){
+                $quantite = $contenuPanier->getQuantite() + 1;
+            }elseif($status == "less"){
+                $quantite = $contenuPanier->getQuantite() - 1;
+            }
+            $contenuPanier->setQuantite($quantite);
             $contenuPanierRepository->save($contenuPanier, true);
-
-            return $this->redirectToRoute('contenu_panier_index', [], Response::HTTP_SEE_OTHER);
+            
+            $this->addFlash('success', $translator->trans('panier.edit_quantite'));
+        }else{
+            if($contenuPanier->getQuantite() <= 1 && $status == "less"){
+                $contenuPanierRepository->remove($contenuPanier, true);
+                $this->addFlash('success', $translator->trans('panier.supprimer'));
+            }
         }
 
-        return $this->render('contenu_panier/edit.html.twig', [
-            'contenu_panier' => $contenuPanier,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirect($request->headers->get('referer'));
     }
 
     #[Route('/delete/{id}', name: 'contenu_panier_delete', methods: ['GET', 'POST'])]
-    public function delete(Request $request, ContenuPanier $contenuPanier, ContenuPanierRepository $contenuPanierRepository): Response
+    public function delete(Request $request, ContenuPanier $contenuPanier, ContenuPanierRepository $contenuPanierRepository, TranslatorInterface $translator): Response
     {
-        // if($contenuPanier->getQuantite() > 1){
-        //     $quantite = $contenuPanier->getQuantite() - 1;
-        //     $contenuPanier->setQuantite($quantite);
-        //     $contenuPanierRepository->save($contenuPanier, true);
-            
-        //     $this->addFlash('success', 'Produit supprimé du panier');
-        // }else{
-        // }
         $contenuPanierRepository->remove($contenuPanier, true);
+        $this->addFlash('success', $translator->trans('panier.supprimer'));
 
         return $this->redirect($request->headers->get('referer'));
     }

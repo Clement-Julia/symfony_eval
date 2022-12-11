@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon profil{% endblock %}
+{% block title %}{{ 'profil.titre'|trans }}{% endblock %}
 
 {% block body %}
-    <h1 class="display-5 text-center">Mon profil</h1>
+    <h1 class="display-5 text-center">{{ 'profil.titre'|trans }}</h1>
 
     <table class="table table-bordered table-hover blanc">
         <tbody>
@@ -12,19 +12,19 @@
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
-                <th>Roles</th>
+                <th>{{ 'profil.role'|trans }}</th>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
             </tr>
             <tr>
-                <th>Nom</th>
+                <th>{{ 'profil.nom'|trans }}</th>
                 <td>{{ user.nom }}</td>
             </tr>
             <tr>
-                <th>Prenom</th>
+                <th>{{ 'profil.prenom'|trans }}</th>
                 <td>{{ user.prenom }}</td>
             </tr>
             <tr>
-                <th>Inscrit depuis le</th>
+                <th>{{ 'profil.inscription'|trans }}</th>
                 <td>{{ user.dateInscription|date('d/m/Y h:i') }}</td>
             </tr>
         </tbody>
@@ -34,26 +34,26 @@
         <a class="btn btn-outline-warning" href="{{ path('user_edit', {'id': user.id}) }}">{{'modifier'|trans}}</a>
     </div>
     
-    <h1 class="display-5 text-center">Mes commandes</h1>
+    <h1 class="display-5 text-center">{{ 'profil.commandes'|trans }}</h1>
     <div class="div_accordions">
         {% for p in paniers %}
         <div class="accordion accordion-flush p-0 mt-1" id="accordion{{p.id}}">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-heading{{p.id}}">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{p.id}}" aria-expanded="false" aria-controls="flush-collapse{{p.id}}">
-                        Commande du {{ p.date|date("d/m/Y H:i") }}
+                        {{ 'profil.commandeDu'|trans }} {{ p.date|date("d/m/Y H:i") }}
                     </button>
                 </h2>
                 <div id="flush-collapse{{p.id}}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{p.id}}" data-bs-parent="#accordion{{p.id}}">
                     <div class="accordion-body d-flex flex-column p-3">
-                        <div class="text-center">Commande passé le : {{ p.date|date('d/m/Y H:i:s') }}</div>
-                        <a class="btn btn-outline-primary mt-2" href="{{ path('panier_view', {'id': p.id}) }}">Voir la commande</a>
+                        <div class="text-center">{{ 'profil.commandePasse'|trans }} {{ p.date|date('d/m/Y H:i:s') }}</div>
+                        <a class="btn btn-outline-primary mt-2" href="{{ path('panier_view', {'id': p.id}) }}"> {{ 'profil.btnCommande'|trans }}</a>
                     </div>
                 </div>
             </div>
         </div>
         {% else %}
-            <div class="fst-italic text-center mt-4">Aucun historique de commande</div>
+            <div class="fst-italic text-center mt-4"> {{ 'profil.noCommande'|trans }}</div>
         {% endfor %}
     </div>
 

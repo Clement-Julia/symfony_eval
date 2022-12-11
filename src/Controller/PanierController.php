@@ -9,24 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('{_locale}/panier')]
 class PanierController extends AbstractController
 {
-    #[Route('/', name: 'panier_index', methods: ['GET'])]
-    public function index(PanierRepository $panierRepository): Response
-    {
-        return $this->render('panier/index.html.twig', [
-            'paniers' => $panierRepository->findAll(),
-        ]);
-    }
-
-    #[Route('/add', name: 'panier_add', methods: ['GET', 'POST'])]
-    public function add(PanierRepository $panierRepository): Response
-    {
-        return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
-    }
-
     #[Route('/view/{id}', name: 'panier_view', methods: ['GET'])]
     public function view(Panier $panier): Response
     {
@@ -38,24 +25,23 @@ class PanierController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'panier_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Panier $panier, PanierRepository $panierRepository): Response
+    #[Route('/list', name: 'panier_list', methods: ['GET'])]
+    public function list(PanierRepository $panierRepository): Response
     {
+        return $this->render('panier/list.html.twig', [
+            'paniers' => $panierRepository->findAllCurrentsBaskets(),
+        ]);
+    }
+
+    #[Route('/edit/{id}', name: 'panier_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Panier $panier, PanierRepository $panierRepository, TranslatorInterface $translator): Response
+    {
+        // On valide le panier en le faisant passer à un etat true
         $panier->setEtat(true);
         $panierRepository->save($panier, true);
 
-        $this->addFlash('success', 'Votre commande a bien été finalisée');
+        $this->addFlash('success', $translator->trans('panier.complete'));
         return $this->redirect($request->headers->get('referer'));
 
-    }
-
-    #[Route('/delete/{id}', name: 'panier_delete', methods: ['POST'])]
-    public function delete(Request $request, Panier $panier, PanierRepository $panierRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$panier->getId(), $request->request->get('_token'))) {
-            $panierRepository->remove($panier, true);
-        }
-
-        return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -39,6 +39,7 @@ security:
         - { path: ^en|fr/user/edit, roles: ROLE_ADMIN }
         - { path: ^en|fr/user/view, roles: ROLE_ADMIN }
         - { path: ^en|fr/user/list, roles: ROLE_SUPERADMIN }
+        - { path: ^en|fr/panier/list, roles: ROLE_SUPERADMIN }
         # Panier
         - { path: ^en|fr/panier/view, roles: ROLE_USER }
 

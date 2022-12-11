@@ -19,6 +19,10 @@ modifier: Modifier
 Update: Enregistrer
 supprimer: Supprimer
 produit: 
+  produit: Produit
+  add: Ajouter au panier
+  noDesc: Pas de description
+  nbExemplaires: exemplaire(s) en stock
   liste: Liste des produits
   nom: Nom
   prix: Prix
@@ -27,4 +31,63 @@ produit:
   noProduit: Pas de produit
   creer: Créer produit
   modification: Modification du produit
-profil: Mon compte
+  errorUpld: Impossible d'uploader l'image
+  successAjout: Produit ajouté
+  successModif: Produit modifié
+  successSupr: Produit supprimé
+profil:
+  titre: Mon profil
+  role: Rôle(s)
+  nom: Nom
+  Prenom: Prénom
+  inscription: Inscrit depuis le
+  commandes: Mes commandes
+  commandeDu: Commande du
+  commandePasse: Commande passé le :
+  btnCommande: Voir la commande
+  noCommande: Aucun historique de commande
+  successEdit: Profil modifié
+panier:
+  panier: Votre panier
+  vide: Votre panier est vide...
+  valider: Passer la commande
+  total: Prix total %:% %i% €
+  commande_total: Prix de la commande %:% %i% €
+  ajout: Produit ajouté au panier
+  edit_quantite: Quantité du produit modifié
+  supprimer: Produit supprimé du panier
+  complete: Votre commande a bien été finalisée
+  idPanier: Id panier
+  utilisateur: Utilisateur
+  prixUnitaire: Prix unitaire
+  noPanier: Pas de panier actif
+contenuPanier:
+  title: Panier
+  panierDu: Panier du
+  prdCommande: Produits commandés :
+  quantite: Quantité
+  erreur: C'est normalement pas possible
+  prix : Prix
+  prixTotal : Prix total
+
+noUser: Aucun utilisateur trouvé
+listeUser: Liste utilisateurs
+listePanier: Liste des paniers
+
+error:
+  404: 404
+  page_404: Page 404
+  oups: Oups !
+  page_non_trouve: Page non trouvé
+  page_non_trouve_exp: La page que vous recherchez n'existe pas
+  home: Retourner sur le site
+  500: 500
+  page_500: Page 500
+  intern_erreur: Erreur interne du serveur
+  intern_erreur_exp: Malheureusement, nous rencontrons des difficultés pour charger la page que vous recherchez. S'il vous plaît revenez plus tard
+  page_erreur: Erreur
+  page_erreur_exp: Cette page a rencontré un problème. Veuillez changer de page
+  page_precedente: Retourner sur la page précédente
+
+successInscriConnex: Vous êtes inscrit et connecté !
+accueil: Accueil
