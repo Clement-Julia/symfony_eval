@@ -66,5 +66,7 @@ contenuPanier:
   prix : Prix
   prixTotal : Prix total
 
+listeUser: Liste utilisateurs
+listePanier: Liste des paniers
 successInscriConnex: Vous êtes inscrit et connecté !
 accueil: Accueil

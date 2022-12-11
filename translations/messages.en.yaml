@@ -66,5 +66,7 @@ contenuPanier:
   prix : Price
   prixTotal : Total price
 
+listeUser: List of users
+listePanier: List of baskets
 successInscriConnex: You are registered and logged in !
 accueil: Home
