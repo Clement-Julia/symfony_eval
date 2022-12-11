@@ -3,27 +3,30 @@
 {% block title %} {{ 'contenuPanier.title'|trans }}{% endblock %}
 
 {% block body %}
-    <a class="btn btn-outline-primary" href="{{ path('user_view', {'id': app.user.id}) }}">{{ 'retour'|trans }}</a>
 
     <h1 class="display-7">{{ 'contenuPanier.prdCommande'|trans }}</h1>
 
     {% for p in paniers %}
-        <div class="card">
-            <div class="card-header">
-                {{ p.user.id}} / {{ p.id}}
+        <div class="card bg-dark mt-3">
+            <div class="card-header d-flex justify-content-between">
+                <div>{{ 'panier.idPanier'|trans }} : {{ p.id}}</div>
+                <div>{{ 'panier.utilisateur'|trans }} : {{ p.user.id}} - {{ p.user.email}}</div>
             </div>
-            <div class="card-body">
+            <div class="card-body pb-0">
                 {% for c in p.contenuPaniers %}
-                    {{ c.produit }}
-                    {{ c.quantite }}
-                    <br>
+                <div class="d-flex justify-content-between">
+                    <div>{{ 'produit.produit'|trans }} : {{ c.produit }}</div>
+                    <div>{{ 'panier.prixUnitaire'|trans }} : {{ c.produit.prix }}€</div>
+                    <div>{{ 'contenuPanier.quantite'|trans }} : {{ c.quantite }}</div>
+                </div>
+                <hr>
                 {% else %}
-                    <div class="fst-italic">Ce n'est normalement pas possible</div>
+                    <div class="fst-italic">{{ 'contenuPanier.erreur'|trans }}</div>
                 {% endfor %}
             </div>
         </div>
     {% else %}
-        <div class="fst-italic">Aucun panier actif</div>
+        <div class="fst-italic">{{ 'panier.noPanier'|trans }}</div>
     {% endfor %}
 
 {% endblock %}

@@ -57,6 +57,10 @@ panier:
   edit_quantite: Quantité du produit modifié
   supprimer: Produit supprimé du panier
   complete: Votre commande a bien été finalisée
+  idPanier: Id panier
+  utilisateur: Utilisateur
+  prixUnitaire: Prix unitaire
+  noPanier: Pas de panier actif
 contenuPanier:
   title: Panier
   panierDu: Panier du
@@ -66,6 +70,7 @@ contenuPanier:
   prix : Prix
   prixTotal : Prix total
 
+noUser: Aucun utilisateur trouvé
 listeUser: Liste utilisateurs
 listePanier: Liste des paniers
 successInscriConnex: Vous êtes inscrit et connecté !
