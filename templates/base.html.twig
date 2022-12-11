@@ -90,6 +90,8 @@
                             </div>
                             <span>{{ panier.Produit.nom }}</span>
                             <span>{{ panier.Produit.prix }}€</span>
+                            {% set r = panier.Produit.prix * panier.quantite %}
+                            <span>Total : {{ r }}€</span>
                             <a href="{{ path('contenu_panier_delete', {'id': panier.id}) }}" class="btn btn-lg d-flex align-items-center"><i class="fa-solid fa-trash-can fa-xs" style="color: red;"></i></a>
                         </div>
                         <hr>
