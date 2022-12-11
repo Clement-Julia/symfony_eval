@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ 'error.page_500'|trans }}{% endblock %}
+
+{%block stylesheets %}
+    {{ parent() }}
+    <link href="{{asset('css/500.css')}}" rel="stylesheet">
+{%endblock%}
+
+{% block body %}
+<div class="page-500 d-flex justify-content-center mt-mid">
+    <div class="outer">
+        <div class="middle">
+            <div class="inner">
+                <!--BEGIN CONTENT-->
+                <div class="inner-circle"><i class="fa fa-cogs"></i><span>{{ 'error.500'|trans }}</span></div>
+                <span class="inner-status">{{ 'error.oups'|trans }} {{ 'error.intern_erreur'|trans }}</span>
+                <span class="inner-detail">{{ 'error.intern_erreur_exp'|trans }}</span>
+                <!--END CONTENT-->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

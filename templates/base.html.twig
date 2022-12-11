@@ -66,12 +66,14 @@
 
         {% block body %}{% endblock %}
     </div>
+    {# Offcanvas qui contient le panier #}
     <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="width: 35%">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title h4 mx-auto" id="offcanvasRightLabel">{{ 'panier.panier'|trans() }}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
+            {# On définie i qui deviendra le prix total #}
             {% set i = 0 %}
             {% if app.session.get('panier') %}
                 {% if app.session.get('panier').contenuPaniers|length > 0 %}

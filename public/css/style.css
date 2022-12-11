@@ -48,6 +48,9 @@ body
 .fs-50 {
     font-size: 50px;
 }
+.mt-mid{
+    margin-top: 15%;
+}
 
 .formConnexion {
     display: flex;

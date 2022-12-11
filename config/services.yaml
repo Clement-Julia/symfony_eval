@@ -19,10 +19,14 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    # On défini le session handler
     app.session_handler:
+        # On appelle le service handler SessionHandler
         class: App\Service\SessionHandler
+        # On défini les dépendances
         arguments:
             - "@doctrine"
             - "@router"
+        # On défini comment et quand doit agir le service
         tags:
-            - { name: kernel.event_listener, event: kernel.request, method: setSession }
+            - { name: kernel.event_listener, event: kernel.request, method: setSession}

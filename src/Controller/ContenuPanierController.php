@@ -25,10 +25,11 @@ class ContenuPanierController extends AbstractController
     #[Route('/add/{id}', name: 'contenu_panier_add', methods: ['GET', 'POST'])]
     public function add(Produit $Produit, PanierRepository $panierRepository, ContenuPanierRepository $contenuPanierRepository, TranslatorInterface $translator): Response
     {
+        // On récupère l'utilisateur actuel et son panier actif
         $user = $this->getUser();
-
         $Panier = $panierRepository->findCurrentBasket($user->getId());
 
+        // S'il ne possède pas de panier, on le définie
         if (!$Panier) {
             $Panier = new Panier();
             $Panier->setUser($this->getUser());
@@ -42,6 +43,7 @@ class ContenuPanierController extends AbstractController
 
         $ContenuPanier = $contenuPanierRepository->findOneBy(["Panier" => $Panier->getId(), "Produit" => $Produit->getId()]);
 
+        // Si le produit est déjà dans le panier on ajoute une quantité, sinon on le créé
         if(!$ContenuPanier){
             $ContenuPanier = new ContenuPanier();
             $ContenuPanier->setPanier($Panier);
@@ -62,9 +64,11 @@ class ContenuPanierController extends AbstractController
     #[Route('/edit/{status}/{id}', name: 'contenu_panier_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ContenuPanier $contenuPanier, ContenuPanierRepository $contenuPanierRepository, TranslatorInterface $translator): Response
     {
+        // Récupération du paramètre statut qui défini s'il s'agit d'un ajout ou d'un retrait
         $routeParams = (object)$request->attributes->get('_route_params');
         $status = $routeParams->status;
 
+        // En fonction du statut et de la quantité, on ajoute ou on en enlève. S'il n'y a suffisamment de quantité on le supprime
         if($contenuPanier->getQuantite() > 1 || $status == "add"){
             if($status == "add"){
                 $quantite = $contenuPanier->getQuantite() + 1;
