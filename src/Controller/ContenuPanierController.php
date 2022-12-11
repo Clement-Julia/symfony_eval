@@ -82,7 +82,7 @@ class ContenuPanierController extends AbstractController
         }else{
             if($contenuPanier->getQuantite() <= 1 && $status == "less"){
                 $contenuPanierRepository->remove($contenuPanier, true);
-                $this->addFlash('success', $translator->trans('produit.supprimer'));
+                $this->addFlash('success', $translator->trans('panier.supprimer'));
             }
         }
 
@@ -93,7 +93,7 @@ class ContenuPanierController extends AbstractController
     public function delete(Request $request, ContenuPanier $contenuPanier, ContenuPanierRepository $contenuPanierRepository, TranslatorInterface $translator): Response
     {
         $contenuPanierRepository->remove($contenuPanier, true);
-        $this->addFlash('success', $translator->trans('produit.supprimer'));
+        $this->addFlash('success', $translator->trans('panier.supprimer'));
 
         return $this->redirect($request->headers->get('referer'));
     }
