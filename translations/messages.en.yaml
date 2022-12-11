@@ -57,6 +57,10 @@ panier:
   edit_quantite: Product quantity modified
   supprimer: Product deleted from basket
   complete: Your order has been successfully completed
+  idPanier: Basket id
+  utilisateur: User
+  prixUnitaire: Unit price
+  noPanier: No active baskets
 contenuPanier:
   title: Basket
   panierDu: Basket from
@@ -65,6 +69,11 @@ contenuPanier:
   erreur: This is not normally possible
   prix : Price
   prixTotal : Total price
+  
+noUser: No user found
+listeUser: List of users
+listePanier: List of baskets
+
 error:
   404: 404
   oups: Oups !
@@ -78,5 +87,6 @@ error:
   page_erreur: Error
   page_erreur_exp: This page has encountered a problem. Please change page
   page_precedente: Go back
+
 successInscriConnex: You are registered and logged in !
 accueil: Home

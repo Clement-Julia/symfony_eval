@@ -39,6 +39,7 @@ class PanierRepository extends ServiceEntityRepository
         }
     }
 
+    // Retourne le panier en cours de l'utilisateur connecté
     public function findCurrentBasket($id): ?Array
     {
         return $this->createQueryBuilder('panier')
@@ -49,6 +50,17 @@ class PanierRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    // Retourne les paniers en cours des utilisateurs
+    public function findAllCurrentsBaskets(): ?Array
+    {
+        return $this->createQueryBuilder('panier')
+            ->andWhere('panier.etat = 0')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
 //    /**
 //     * @return Panier[] Returns an array of Panier objects

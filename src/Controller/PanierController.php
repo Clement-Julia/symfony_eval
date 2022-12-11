@@ -25,6 +25,14 @@ class PanierController extends AbstractController
         ]);
     }
 
+    #[Route('/list', name: 'panier_list', methods: ['GET'])]
+    public function list(PanierRepository $panierRepository): Response
+    {
+        return $this->render('panier/list.html.twig', [
+            'paniers' => $panierRepository->findAllCurrentsBaskets(),
+        ]);
+    }
+
     #[Route('/edit/{id}', name: 'panier_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Panier $panier, PanierRepository $panierRepository, TranslatorInterface $translator): Response
     {

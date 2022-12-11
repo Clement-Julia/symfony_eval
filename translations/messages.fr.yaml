@@ -57,6 +57,10 @@ panier:
   edit_quantite: Quantité du produit modifié
   supprimer: Produit supprimé du panier
   complete: Votre commande a bien été finalisée
+  idPanier: Id panier
+  utilisateur: Utilisateur
+  prixUnitaire: Prix unitaire
+  noPanier: Pas de panier actif
 contenuPanier:
   title: Panier
   panierDu: Panier du
@@ -65,6 +69,11 @@ contenuPanier:
   erreur: C'est normalement pas possible
   prix : Prix
   prixTotal : Prix total
+
+noUser: Aucun utilisateur trouvé
+listeUser: Liste utilisateurs
+listePanier: Liste des paniers
+
 error:
   404: 404
   page_404: Page 404
@@ -79,5 +88,6 @@ error:
   page_erreur: Erreur
   page_erreur_exp: Cette page a rencontré un problème. Veuillez changer de page
   page_precedente: Retourner sur la page précédente
+
 successInscriConnex: Vous êtes inscrit et connecté !
 accueil: Accueil

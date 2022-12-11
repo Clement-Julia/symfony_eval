@@ -32,7 +32,7 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-center">
-                    {% if is_granted('ROLE_ADMIN') %}
+                    {% if is_granted('ROLE_USER') %}
                         <a class="btn btn-outline-success" href="{{ path('contenu_panier_add', {'id': produit.id}) }}">{{'produit.add'|trans}}</a>
                     {% else %}
                         <a class="btn btn-outline disabled">{{'produit.add'|trans}}</a>
